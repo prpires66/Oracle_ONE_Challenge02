@@ -1,1 +1,1 @@
-# -Oracle_ONE_Challenge02
+# Oracle_ONE_Challenge02
