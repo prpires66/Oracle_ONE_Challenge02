@@ -1,0 +1,146 @@
+* {
+	font-family: 'Inter', sans-serif;
+}
+
+.main {
+	display: block;
+	background: #E5E5E5;
+	align-items: stretch;
+	height: 90vh;
+}
+
+h1 {
+	/* Nenhuma mensagem encontrada */
+
+	position: static;
+	padding: 10px;
+
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 120%;
+	/* or 29px */
+
+	text-align: center;
+
+	/* Gray/gray-500 */
+
+	color: #343A40;
+
+	/* Inside auto layout */
+
+	flex: none;
+	order: 0;
+	align-self: stretch;
+	flex-grow: 0;
+	margin: 0px 10px;
+}
+
+.logo {
+	position: relative;
+
+	height: 48px;
+	left: 44px;
+	border-radius: 0px;
+	align-self: baseline;
+}
+
+label {
+	/* Apenas letras minúsculas e sem acento. */
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 150%;
+	/* identical to box height, or 18px */
+
+	/* Gray/gray-400 */
+
+	color: #495057;
+
+	opacity: 0.8;
+
+	/* Inside auto layout */
+
+	flex: none;
+	order: 1;
+	flex-grow: 0;
+	margin: 0px 80px;
+	text-align: left;
+}
+
+.menu-inicial {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	background: #E5E5E5;
+	border-radius: 0px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.icone {
+	/* Gray/gray-400 */
+
+	height: 16px;
+}
+
+button {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: center;
+	padding: 24px;
+
+	position: static;
+	width: 20vw;
+	height: 67px;
+	left: 0px;
+	top: 0px;
+
+	border-radius: 24px;
+
+	flex: none;
+	order: 0;
+	flex-grow: 0;
+	margin: 24px 24px;
+
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 19px;
+	text-align: center;
+}
+
+button:active {
+	margin-top: 0px;
+	border: 0;
+}
+
+.btn-comecar {
+	background: #0A3871;
+	border: 1px solid #D8DFE8;
+	color: white;
+}
+.bnt-adicionar {
+	background: #D8DFE8;
+	border: 1px solid #0A3871;
+}
+
+footer {
+	font-family: 'Inter', sans-serif;
+	background-color: #d5d5d5;
+	color: #02326d;
+	padding: 10px;
+	font-size: 12px;
+	text-align: center;
+	flex: none;
+	order: 2;
+	flex-grow: 0;
+	margin: 0px;
+}
