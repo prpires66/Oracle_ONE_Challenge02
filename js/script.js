@@ -1,56 +1,26 @@
-function encriptar(texto) {
-    let textoEncriptado = [["a", "ai"], ["e", "enter"], ["i", "imes"], ["o", "ober"], ["u", "ufat"]];
-    let textoEncriptadoFinal = "";
-    let vogal;
-    for (let i = 0; i < texto.length; i++) {
-        vogal = false;
-        for (let j = 0; j < textoEncriptado.length; j++) {
-            if (texto[i] == textoEncriptado[j][0]) {
-                textoEncriptadoFinal += textoEncriptado[j][1];
-                vogal = true;
-            }
-        }
-        if (vogal == false) {
-            textoEncriptadoFinal += texto[i];
-        }
+function criarTabuleiro() {
+    var canvas = document.getElementById("myCanvas");
+    if (canvas.getContext) {
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "white"; 
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     }
-    return textoEncriptadoFinal;
 }
 
-function desencriptar(texto) {
-    let textoEncriptado = [["a", "ai", 2], ["e", "enter", 5], ["i", "imes", 4], ["o", "ober", 4], ["u", "ufat", 4]];
-    let textoEncriptadoFinal = "";
-    let vogal;
-    let x;
-    for (let i = 0; i < texto.length; i++) {
-        vogal = false;
-        x = 0;
-        for (let j = 0; j < textoEncriptado.length; j++) {
-            console.log("i: ", i, "j: " + j);
-            if (texto[i] == textoEncriptado[j][0]) {
-                console.log(texto[i], textoEncriptado[j][0]);
-                textoEncriptadoFinal += textoEncriptado[j][0];
-                i += textoEncriptado[j][2] - 1;
-                vogal = true;
-                break;
-            }
-        }
-        if (vogal == false) {
-            console.log("consoante ", texto[i]);
-            textoEncriptadoFinal += texto[i];
-        }
-    }
-    return textoEncriptadoFinal;
-};
-
-var botaoAdicionar = document.querySelector('.btn-adicionar');
-botaoAdicionar.addEventListener("click", function () {
-    alert("Adicionar");
-});
 
 var botaoComecar = document.querySelector('.btn-comecar');
 botaoComecar.addEventListener("click", function () {
-    alert("Começar");
+    document.querySelector('.menu-inicial').classList.add('oculto');
+    document.querySelector('.tabuleiro').classList.remove('oculto');
+    document.querySelector('.jogo').classList.remove('oculto');
+    criarTabuleiro();
+});
+
+var botaoAdicionar = document.querySelector('.btn-adicionar');
+botaoAdicionar.addEventListener("click", function () {
+    document.querySelector('.menu-inicial').classList.add('oculto');
+    document.querySelector('.tabuleiro').classList.remove('oculto');
 });
 
 inputTexto.addEventListener("keyup", function () {

@@ -14,17 +14,27 @@
     <title>Jogo da Forca</title>
 </head>
 
-<body>
+<body">
     <header class="header">
         <img class="logo" src="img/logo.svg">
     </header>
     <main class="main">
         <section class="menu-inicial">
             <div class="botoes-menu">
-                <button class="btn-comecar" onclick="window.location.href='index.html'">Iniciar</button>
-                <button class="btn-adicionar" onclick="window.location.href='index.html'">Ranking</button>
+                <button class="btn-comecar">Começara a jogar</button>
+                <button class="btn-adicionar">Adicionar nova palavra</button>
             </div>
         </section>
+        <section class="jogo oculto">
+            <div class="tabuleiro">
+                <canvas id="myCanvas" width="1200" height="600"></canvas>
+            </div>
+            <div class="botoes-jogo">
+                <button class="btn-novo-jogo">Novo jogo</button>
+                <button class="btn-desistir">Desistir</button>
+            </div>
+        </section>
+
     </main>
     <footer>
         <p class="autor">
@@ -32,6 +42,7 @@
         </p>
     </footer>
     <script src="js/script.js"></script>
-</body>
+
+    </body>
 
 </html>

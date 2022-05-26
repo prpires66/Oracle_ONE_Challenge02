@@ -6,7 +6,11 @@
 	display: block;
 	background: #E5E5E5;
 	align-items: stretch;
-	height: 90vh;
+	height: 85vh;
+}
+
+.header {
+	background: #E5E5E5;
 }
 
 h1 {
@@ -39,29 +43,24 @@ h1 {
 
 .logo {
 	position: relative;
-
 	height: 48px;
 	left: 44px;
 	border-radius: 0px;
 	align-self: baseline;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 label {
-	/* Apenas letras minúsculas e sem acento. */
 	font-family: 'Inter';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 12px;
 	line-height: 150%;
-	/* identical to box height, or 18px */
-
-	/* Gray/gray-400 */
 
 	color: #495057;
 
 	opacity: 0.8;
-
-	/* Inside auto layout */
 
 	flex: none;
 	order: 1;
@@ -83,9 +82,22 @@ label {
 	margin: 0px;
 }
 
-.icone {
-	/* Gray/gray-400 */
+.jogo {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	background: #E5E5E5;
+	border-radius: 0px;
+	padding: 0px;
+	margin: 0px;
+}
 
+.icone {
 	height: 16px;
 }
 
@@ -104,9 +116,6 @@ button {
 
 	border-radius: 24px;
 
-	flex: none;
-	order: 0;
-	flex-grow: 0;
 	margin: 24px 24px;
 
 	font-family: 'Inter';
@@ -117,17 +126,29 @@ button {
 	text-align: center;
 }
 
+.botoes-menu {
+
+}
+
+.botoes-jogo {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: center;
+	padding: 24px;
+}
+
 button:active {
-	margin-top: 0px;
 	border: 0;
 }
 
-.btn-comecar {
+.btn-comecar, .btn-novo-jogo {
 	background: #0A3871;
 	border: 1px solid #D8DFE8;
 	color: white;
 }
-.bnt-adicionar {
+
+.bnt-adicionar, .btn-desistir {
 	background: #D8DFE8;
 	border: 1px solid #0A3871;
 }
@@ -143,4 +164,8 @@ footer {
 	order: 2;
 	flex-grow: 0;
 	margin: 0px;
+}
+
+.oculto {
+	display: none;
 }
