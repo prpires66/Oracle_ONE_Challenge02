@@ -7,8 +7,8 @@ function criarTabuleiro() {
         var ctx = canvas.getContext("2d");
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "black";
         ctx.font = '48px Inter';
+        ctx.fillStyle = '#0A3871';
         var palavraSorteada = sortearPalavra();
         palavraSorteada.forEach((palavraSoprteada, index, array) => {
             ctx.fillText(array[index], canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras / 2, 550);
@@ -16,9 +16,10 @@ function criarTabuleiro() {
             ctx.lineWidth = 5;
             ctx.moveTo(canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras / 2, 560);
             ctx.lineTo(canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras, 560);
+            ctx.strokeStyle = '#0A3871';
             ctx.stroke();
         });
-    desenharForca();
+        desenharForca(0);
     }
 }
 
@@ -28,53 +29,61 @@ function sortearPalavra() {
     return palavra;
 }
 
-function desenharForca() {
+function desenharForca(sequenciaErros) {
     var canvas = document.getElementById("myCanvas")
     var canvasWidth = canvas.getAttribute("width");
     var canvasHeight = canvas.getAttribute("height");
-    var xVertice = canvasWidth / 2-294/2;
-    var yVertice = 400;
+    var xVertice = canvasWidth / 2 - 294 / 2;
+    var yVertice = 450;
 
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = "black";
     ctx.font = '48px Inter';
     ctx.beginPath();
-    ctx.lineWidth = 5;
-
-    ctx.moveTo(xVertice,yVertice);
-    ctx.lineTo(xVertice+294,yVertice);
-    ctx.stroke();
-    
     ctx.beginPath();
     ctx.lineWidth = 4.5;
-
-    ctx.moveTo(xVertice+84,yVertice);
-    ctx.lineTo(xVertice+84,yVertice-360);
-
-    ctx.moveTo(xVertice+84,yVertice-360);
-    ctx.lineTo(xVertice+84+177,yVertice-360);
-
-    ctx.moveTo(xVertice+84+177,yVertice-360);
-    ctx.lineTo(xVertice+84+177,yVertice-360+50);
-
-    ctx.arc(xVertice+84+177,yVertice-360+50+32, 32, 1.5 * Math.PI, 1.4999 * Math.PI);
-
-    ctx.moveTo(xVertice+84+177,yVertice-360+50+64);
-    ctx.lineTo(xVertice+84+177,yVertice-360+50+64+135);
-
-    ctx.moveTo(xVertice+84+177,yVertice-360+50+64+135);
-    ctx.lineTo(xVertice+84+177-36,yVertice-360+50+64+135+63);
-
-    ctx.moveTo(xVertice+84+177,yVertice-360+50+64+135);
-    ctx.lineTo(xVertice+84+177+36,yVertice-360+50+64+135+63);
-
-    ctx.moveTo(xVertice+84+177,yVertice-360+50+64);
-    ctx.lineTo(xVertice+84+177-36,yVertice-360+50+64+135-63);
-
-    ctx.moveTo(xVertice+84+177,yVertice-360+50+64);
-    ctx.lineTo(xVertice+84+177+36,yVertice-360+50+64+135-63);
-
-
+    switch (sequenciaErros) {
+        case 0:
+            ctx.lineWidth = 5;
+            ctx.moveTo(xVertice, yVertice);
+            ctx.lineTo(xVertice + 294, yVertice);
+            break;
+        case 1:
+            ctx.moveTo(xVertice + 84, yVertice);
+            ctx.lineTo(xVertice + 84, yVertice - 360);
+            break;
+        case 2:
+            ctx.moveTo(xVertice + 84, yVertice - 360);
+            ctx.lineTo(xVertice + 84 + 177, yVertice - 360);
+            break;
+        case 3:
+            ctx.moveTo(xVertice + 84 + 177, yVertice - 360);
+            ctx.lineTo(xVertice + 84 + 177, yVertice - 360 + 50);
+            break;
+        case 4:
+            ctx.arc(xVertice + 84 + 177, yVertice - 360 + 50 + 32, 32, 1.5 * Math.PI, 1.4999 * Math.PI);
+            break;
+        case 5:
+            ctx.moveTo(xVertice + 84 + 177, yVertice - 360 + 50 + 64);
+            ctx.lineTo(xVertice + 84 + 177, yVertice - 360 + 50 + 64 + 135);
+            break;
+        case 6:
+            ctx.moveTo(xVertice + 84 + 177, yVertice - 360 + 50 + 64 + 135);
+            ctx.lineTo(xVertice + 84 + 177 - 36, yVertice - 360 + 50 + 64 + 135 + 63);
+            break;
+        case 7:
+            ctx.moveTo(xVertice + 84 + 177, yVertice - 360 + 50 + 64 + 135);
+            ctx.lineTo(xVertice + 84 + 177 + 36, yVertice - 360 + 50 + 64 + 135 + 63);
+            break;
+        case 8:
+            ctx.moveTo(xVertice + 84 + 177, yVertice - 360 + 50 + 64);
+            ctx.lineTo(xVertice + 84 + 177 - 36, yVertice - 360 + 50 + 64 + 135 - 63);
+            break;
+        case 9:
+            ctx.moveTo(xVertice + 84 + 177, yVertice - 360 + 50 + 64);
+            ctx.lineTo(xVertice + 84 + 177 + 36, yVertice - 360 + 50 + 64 + 135 - 63);
+            break;
+    }
     ctx.stroke();
 };
 
@@ -106,12 +115,26 @@ botaoDesistir.addEventListener("click", function () {
     document.querySelector('.tabuleiro').classList.add('oculto');
     document.querySelector('.jogo').classList.add('oculto');
 });
+var letraEscolhida = []
+document.body.addEventListener('keypress', function (event) {
 
-inputTexto.addEventListener("keyup", function () {
-    const texto = inputTexto.value;
-    if (texto.length == 0) {
-        document.querySelector('.resultado-imagem').classList.toggle('escondido');
-        document.querySelector('.direita').style.justifyContent = 'center';
-        document.querySelector('.resultado').classList.toggle('escondido');
+    const key = event.key;
+    console.log(key);
+    letraEscolhida.push(key.toUpperCase());
+    console.log(letraEscolhida);
+
+    var canvas = document.getElementById("myCanvas");
+    var canvasWidth = canvas.getAttribute("width");
+    var canvasHeight = canvas.getAttribute("height");
+    var espacamentoLetras = 50;
+
+    if (canvas.getContext) {
+        var ctx = canvas.getContext("2d");
+        ctx.font = '24px Inter';
+        ctx.fillStyle = '#0A3871';
+        letraEscolhida.forEach((letraEscolhida, index, array) => {
+            ctx.fillText(array[index], canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras / 2, 620);
+        });
     }
+
 });
