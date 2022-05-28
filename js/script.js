@@ -1,3 +1,6 @@
+var palavraSorteada = "";
+var letrasEscolhidasIncorretas = []
+
 function criarTabuleiro() {
     var canvas = document.getElementById("myCanvas");
     var canvasWidth = canvas.getAttribute("width");
@@ -9,24 +12,25 @@ function criarTabuleiro() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.font = '48px Inter';
         ctx.fillStyle = '#0A3871';
-        var palavraSorteada = sortearPalavra();
-        palavraSorteada.forEach((palavraSoprteada, index, array) => {
-            ctx.fillText(array[index], canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras / 2, 550);
-            ctx.beginPath();
+        sortearPalavra();
+        ctx.fillText(palavraSorteada.join([separador = '']), 100, 100);
+        desenharForca(0);
+
+        palavraSorteada.forEach((palavraSorteada, index, array) => {
             ctx.lineWidth = 5;
             ctx.moveTo(canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras / 2, 560);
             ctx.lineTo(canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras, 560);
             ctx.strokeStyle = '#0A3871';
             ctx.stroke();
         });
-        desenharForca(0);
+    
     }
 }
 
 function sortearPalavra() {
     var palavras = ["CAT", "DOG", "MOUSE", "PIG", "RAT", "COW", "HORSE", "SHEEP", "CHICKEN", "DUCK", "GOOSE", "PARROT", "SNAKE", "SQUIRREL", "TURTLE", "ZEBRA", "ANT", "BEETLE", "BUTTERFLY", "CRAB", "CROCODILE", "DOLPHIN", "ELEPHANT", "FROG", "GIRAFFE", "HIPPOPOTAMUS", "JACKAL", "KANGAROO", "LEOPARD", "LION", "MANTIS", "MONKEY", "OCTOPUS", "PANDA", "PENGUIN", "RABBIT", "SALAMANDER", "SNAKE", "TIGER", "WOLF", "YAK", "ZEBRA"];
     var palavra = palavras[Math.floor(Math.random() * palavras.length)].toUpperCase().split("");
-    return palavra;
+    palavraSorteada = palavra;
 }
 
 function desenharForca(sequenciaErros) {
@@ -92,6 +96,7 @@ botaoComecar.addEventListener("click", function () {
     document.querySelector('.menu-inicial').classList.add('oculto');
     document.querySelector('.tabuleiro').classList.remove('oculto');
     document.querySelector('.jogo').classList.remove('oculto');
+    letrasEscolhidasIncorretas = [];
     criarTabuleiro();
 });
 
@@ -100,6 +105,7 @@ botaoNovoJogo.addEventListener("click", function () {
     document.querySelector('.menu-inicial').classList.add('oculto');
     document.querySelector('.tabuleiro').classList.remove('oculto');
     document.querySelector('.jogo').classList.remove('oculto');
+    letrasEscolhidasIncorretas = [];
     criarTabuleiro();
 });
 
@@ -114,9 +120,9 @@ botaoDesistir.addEventListener("click", function () {
     document.querySelector('.menu-inicial').classList.remove('oculto');
     document.querySelector('.tabuleiro').classList.add('oculto');
     document.querySelector('.jogo').classList.add('oculto');
+    letrasEscolhidasIncorretas = [];
 });
 
-var letrasEscolhidasIncorretas = []
 document.body.addEventListener('keypress', function (event) {
     const letrasValidas = ['A', 'B', 'C', 'Ç', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     const key = event.key;
@@ -124,8 +130,14 @@ document.body.addEventListener('keypress', function (event) {
     const letraUnica = letrasEscolhidasIncorretas.includes(key.toUpperCase());
     const validaLetra = letrasValidas.includes(key.toUpperCase());
     if (!letraUnica && validaLetra) {
-        letrasEscolhidasIncorretas.push(key.toUpperCase());
-        escreverLetraIncorreta(letrasEscolhidasIncorretas);
+        var acertos = verificarLetraPrecionada(key.toUpperCase());
+        if (acertos.length === 0) {
+            letrasEscolhidasIncorretas.push(key.toUpperCase());
+            escreverLetraIncorreta(letrasEscolhidasIncorretas);
+            desenharForca(letrasEscolhidasIncorretas.length);
+        } else {
+            escreverLetraAcertada(acertos);
+        }
     }
 });
 
@@ -147,3 +159,31 @@ function escreverLetraIncorreta(incorretas) {
         });
     }
 }
+
+function escreverLetraAcertada(acertos) {
+    var letrasAcertadas = acertos;
+
+    var canvas = document.getElementById("myCanvas");
+    var canvasWidth = canvas.getAttribute("width");
+    var canvasHeight = canvas.getAttribute("height");
+    var espacamentoLetras = 100;
+    var ctx = canvas.getContext("2d");
+    ctx.font = '48px Inter';
+    ctx.fillStyle = '#0A3871';    
+
+    letrasAcertadas.forEach((letrasAcertadas) => {
+        ctx.fillText(palavraSorteada[letrasAcertadas], canvasWidth / 2 - palavraSorteada.length * espacamentoLetras / 2 + espacamentoLetras * letrasAcertadas + espacamentoLetras / 2, 550);
+        ctx.stroke();
+       });
+}
+
+function verificarLetraPrecionada(letraEscolhida) {
+    var letra = letraEscolhida;
+    var indices = [];
+    var idx = palavraSorteada.indexOf(letra);
+    while (idx != -1) {
+        indices.push(idx);
+        idx = palavraSorteada.indexOf(letra, idx + 1);
+    }
+    return (indices);
+} 
