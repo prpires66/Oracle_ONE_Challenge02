@@ -115,26 +115,35 @@ botaoDesistir.addEventListener("click", function () {
     document.querySelector('.tabuleiro').classList.add('oculto');
     document.querySelector('.jogo').classList.add('oculto');
 });
-var letraEscolhida = []
+
+var letrasEscolhidasIncorretas = []
 document.body.addEventListener('keypress', function (event) {
-
+    const letrasValidas = ['A', 'B', 'C', 'Ç', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     const key = event.key;
-    console.log(key);
-    letraEscolhida.push(key.toUpperCase());
-    console.log(letraEscolhida);
 
+    const letraUnica = letrasEscolhidasIncorretas.includes(key.toUpperCase());
+    const validaLetra = letrasValidas.includes(key.toUpperCase());
+    if (!letraUnica && validaLetra) {
+        letrasEscolhidasIncorretas.push(key.toUpperCase());
+        escreverLetraIncorreta(letrasEscolhidasIncorretas);
+    }
+});
+
+function escreverLetraIncorreta(incorretas) {
+    var letrasIncorretas = incorretas;
     var canvas = document.getElementById("myCanvas");
     var canvasWidth = canvas.getAttribute("width");
     var canvasHeight = canvas.getAttribute("height");
-    var espacamentoLetras = 50;
+    var espacamentoLetras = 40;
 
     if (canvas.getContext) {
         var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "white";
+        ctx.fillRect(10, 580, 1180, 580);
         ctx.font = '24px Inter';
         ctx.fillStyle = '#0A3871';
-        letraEscolhida.forEach((letraEscolhida, index, array) => {
+        letrasIncorretas.forEach((letrasIncorretas, index, array) => {
             ctx.fillText(array[index], canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras / 2, 620);
         });
     }
-
-});
+}
