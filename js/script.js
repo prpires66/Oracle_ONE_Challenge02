@@ -4,21 +4,26 @@
 var palavraSorteada;
 var letrasEscolhidasIncorretas;
 var letrasEscolhidasCorretas;
+var letrasEscolhidasCorretasTotal;
+var palavras = ["BORBOLETA"];
 var palavras = ["GATO", "CACHORRO", "RATO", "PORCO", "RATO", "VACA", "CAVALO", "OVELHA", "GALINA", "PATO", "GANSO", "PAPAGAIO", "ESQUILO", "TARTARUGA", "ZEBRA", "FORMIGA", "BESOURO", "BORBOLETA", "CARANGUEJO", "CROCODILO", "GOLFINHO", "ELEFANTE", "SAPO", "GIRAFA", "LOBO", "CANGURU", "LEOPARDO", "MACACO", "POLVO", "PANDA", "PINGUIM", "COELHO", "SALAMANDRA", "TIGRE", "LOBO", "ZEBRA"];
-var palavras = ["GANSO"];
 const letrasValidas = ['A', 'B', 'C', 'Ç', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+var canvas = document.getElementById("myCanvas");
+var canvasWidth = canvas.getAttribute("width");
+var canvasHeight = canvas.getAttribute("height");
+var xOffset = canvasWidth / 2 - 294 / 2; 
+var yOffset = 500;
 
 function inicializaVariaveis() {
     var palavraSorteada = ""
     letrasEscolhidasIncorretas = [];
-    letrasEscolhidasCorretas = 0;
+    letrasEscolhidasCorretas = [];
+    letrasEscolhidasCorretasTotal = 0;
 }
 
 function criarTabuleiro() {
     inicializaVariaveis();
-    var canvas = document.getElementById("myCanvas");
-    var canvasWidth = canvas.getAttribute("width");
-    var canvasHeight = canvas.getAttribute("height");
     if (canvas.getContext) {
         var espacamentoLetras = 100;
         var ctx = canvas.getContext("2d");
@@ -26,18 +31,17 @@ function criarTabuleiro() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.font = '48px Inter';
         ctx.fillStyle = '#0A3871';
+        ctx.fillText("JOGO DA FORCA", canvasWidth / 2 - ctx.measureText("JOGO DA FORCA").width / 2, 50);
         sortearPalavra();
-        ctx.fillText(palavraSorteada.join([separador = '']), 100, 100);
         desenharForca(0);
 
         palavraSorteada.forEach((palavraSorteada, index, array) => {
             ctx.lineWidth = 5;
-            ctx.moveTo(canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras / 2, 560);
-            ctx.lineTo(canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras, 560);
+            ctx.moveTo(canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras / 2, 560 + 50);
+            ctx.lineTo(canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras, 560 + 50);
             ctx.strokeStyle = '#0A3871';
             ctx.stroke();
         });
-
     }
 }
 
@@ -47,12 +51,6 @@ function sortearPalavra() {
 }
 
 function desenharForca(sequenciaErros) {
-    var canvas = document.getElementById("myCanvas")
-    var canvasWidth = canvas.getAttribute("width");
-    var canvasHeight = canvas.getAttribute("height");
-    var xVertice = canvasWidth / 2 - 294 / 2;
-    var yVertice = 450;
-
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = "black";
     ctx.font = '48px Inter';
@@ -62,43 +60,43 @@ function desenharForca(sequenciaErros) {
     switch (sequenciaErros) {
         case 0:
             ctx.lineWidth = 5;
-            ctx.moveTo(xVertice, yVertice);
-            ctx.lineTo(xVertice + 294, yVertice);
+            ctx.moveTo(xOffset, yOffset);
+            ctx.lineTo(xOffset + 294, yOffset);
             break;
         case 1:
-            ctx.moveTo(xVertice + 84, yVertice);
-            ctx.lineTo(xVertice + 84, yVertice - 360);
+            ctx.moveTo(xOffset + 84, yOffset);
+            ctx.lineTo(xOffset + 84, yOffset - 360);
             break;
         case 2:
-            ctx.moveTo(xVertice + 84, yVertice - 360);
-            ctx.lineTo(xVertice + 84 + 177, yVertice - 360);
+            ctx.moveTo(xOffset + 84, yOffset - 360);
+            ctx.lineTo(xOffset + 84 + 177, yOffset - 360);
             break;
         case 3:
-            ctx.moveTo(xVertice + 84 + 177, yVertice - 360);
-            ctx.lineTo(xVertice + 84 + 177, yVertice - 360 + 50);
+            ctx.moveTo(xOffset + 84 + 177, yOffset - 360);
+            ctx.lineTo(xOffset + 84 + 177, yOffset - 360 + 50);
             break;
         case 4:
-            ctx.arc(xVertice + 84 + 177, yVertice - 360 + 50 + 32, 32, 1.5 * Math.PI, 1.4999 * Math.PI);
+            ctx.arc(xOffset + 84 + 177, yOffset - 360 + 50 + 32, 32, 1.5 * Math.PI, 1.4999 * Math.PI);
             break;
         case 5:
-            ctx.moveTo(xVertice + 84 + 177, yVertice - 360 + 50 + 64);
-            ctx.lineTo(xVertice + 84 + 177, yVertice - 360 + 50 + 64 + 135);
+            ctx.moveTo(xOffset + 84 + 177, yOffset - 360 + 50 + 64);
+            ctx.lineTo(xOffset + 84 + 177, yOffset - 360 + 50 + 64 + 135);
             break;
         case 6:
-            ctx.moveTo(xVertice + 84 + 177, yVertice - 360 + 50 + 64 + 135);
-            ctx.lineTo(xVertice + 84 + 177 - 36, yVertice - 360 + 50 + 64 + 135 + 63);
+            ctx.moveTo(xOffset + 84 + 177, yOffset - 360 + 50 + 64 + 135);
+            ctx.lineTo(xOffset + 84 + 177 - 36, yOffset - 360 + 50 + 64 + 135 + 63);
             break;
         case 7:
-            ctx.moveTo(xVertice + 84 + 177, yVertice - 360 + 50 + 64 + 135);
-            ctx.lineTo(xVertice + 84 + 177 + 36, yVertice - 360 + 50 + 64 + 135 + 63);
+            ctx.moveTo(xOffset + 84 + 177, yOffset - 360 + 50 + 64 + 135);
+            ctx.lineTo(xOffset + 84 + 177 + 36, yOffset - 360 + 50 + 64 + 135 + 63);
             break;
         case 8:
-            ctx.moveTo(xVertice + 84 + 177, yVertice - 360 + 50 + 64);
-            ctx.lineTo(xVertice + 84 + 177 - 36, yVertice - 360 + 50 + 64 + 135 - 63);
+            ctx.moveTo(xOffset + 84 + 177, yOffset - 360 + 50 + 64);
+            ctx.lineTo(xOffset + 84 + 177 - 36, yOffset - 360 + 50 + 64 + 135 - 63);
             break;
         case 9:
-            ctx.moveTo(xVertice + 84 + 177, yVertice - 360 + 50 + 64);
-            ctx.lineTo(xVertice + 84 + 177 + 36, yVertice - 360 + 50 + 64 + 135 - 63);
+            ctx.moveTo(xOffset + 84 + 177, yOffset - 360 + 50 + 64);
+            ctx.lineTo(xOffset + 84 + 177 + 36, yOffset - 360 + 50 + 64 + 135 - 63);
             break;
     }
     ctx.stroke();
@@ -137,9 +135,10 @@ botaoDesistir.addEventListener("click", function () {
 document.body.addEventListener('keypress', function (event) {
     const key = event.key;
 
-    const letraUnica = letrasEscolhidasIncorretas.includes(key.toUpperCase());
+    const letraUnicaIncorreta = letrasEscolhidasIncorretas.includes(key.toUpperCase());
+    const letraUnicaCorreta = letrasEscolhidasCorretas.includes(key.toUpperCase());
     const validaLetra = letrasValidas.includes(key.toUpperCase());
-    if (!letraUnica && validaLetra) {
+    if (!letraUnicaIncorreta && !letraUnicaCorreta && validaLetra) {
         var acertos = verificarLetraPrecionada(key.toUpperCase());
         if (acertos.length === 0) {
             letrasEscolhidasIncorretas.push(key.toUpperCase());
@@ -147,7 +146,8 @@ document.body.addEventListener('keypress', function (event) {
             desenharForca(letrasEscolhidasIncorretas.length);
             verificarFimDeJogo();
         } else {
-            letrasEscolhidasCorretas = letrasEscolhidasCorretas + acertos.length;
+            letrasEscolhidasCorretas.push(key.toUpperCase());
+            letrasEscolhidasCorretasTotal += acertos.length;
             escreverLetraAcertada(acertos);
             verificarVencerJogo();
         }
@@ -156,19 +156,16 @@ document.body.addEventListener('keypress', function (event) {
 
 function escreverLetraIncorreta(incorretas) {
     var letrasIncorretas = incorretas;
-    var canvas = document.getElementById("myCanvas");
-    var canvasWidth = canvas.getAttribute("width");
-    var canvasHeight = canvas.getAttribute("height");
     var espacamentoLetras = 40;
 
     if (canvas.getContext) {
         var ctx = canvas.getContext("2d");
         ctx.fillStyle = "white";
-        ctx.fillRect(10, 580, 1180, 580);
+        ctx.fillRect(0, yOffset + 130, canvasWidth, yOffset + 130);
         ctx.font = '24px Inter';
         ctx.fillStyle = '#0A3871';
         letrasIncorretas.forEach((letrasIncorretas, index, array) => {
-            ctx.fillText(array[index], canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras / 2, 620);
+            ctx.fillText(array[index], canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras / 2, yOffset + 170);
         });
     }
 }
@@ -176,16 +173,13 @@ function escreverLetraIncorreta(incorretas) {
 function escreverLetraAcertada(acertos) {
     var letrasAcertadas = acertos;
 
-    var canvas = document.getElementById("myCanvas");
-    var canvasWidth = canvas.getAttribute("width");
-    var canvasHeight = canvas.getAttribute("height");
     var espacamentoLetras = 100;
     var ctx = canvas.getContext("2d");
     ctx.font = '48px Inter';
     ctx.fillStyle = '#0A3871';
 
     letrasAcertadas.forEach((letrasAcertadas) => {
-        ctx.fillText(palavraSorteada[letrasAcertadas], canvasWidth / 2 - palavraSorteada.length * espacamentoLetras / 2 + espacamentoLetras * letrasAcertadas + espacamentoLetras / 2, 550);
+        ctx.fillText(palavraSorteada[letrasAcertadas], canvasWidth / 2 - palavraSorteada.length * espacamentoLetras / 2 + espacamentoLetras * letrasAcertadas + espacamentoLetras / 2, yOffset + 100);
         ctx.stroke();
     });
 }
@@ -202,14 +196,11 @@ function verificarLetraPrecionada(letraEscolhida) {
 }
 
 function verificarVencerJogo() {
-    if (palavraSorteada.length === letrasEscolhidasCorretas) {
-        var canvas = document.getElementById("myCanvas");
-        var canvasWidth = canvas.getAttribute("width");
-        var canvasHeight = canvas.getAttribute("height");
+    if (palavraSorteada.length === letrasEscolhidasCorretasTotal) {
         var ctx = canvas.getContext("2d");
         ctx.font = '24px Inter';
         ctx.fillStyle = 'red';
-        ctx.fillText("Você venceu!", 750, 250);
+        ctx.fillText("Você venceu!", xOffset + 300, yOffset - 200);
         ctx.stroke();
         letrasEscolhidasIncorretas = letrasValidas;
     }
@@ -217,13 +208,10 @@ function verificarVencerJogo() {
 
 function verificarFimDeJogo() {
     if (letrasEscolhidasIncorretas.length === 9) {
-        var canvas = document.getElementById("myCanvas");
-        var canvasWidth = canvas.getAttribute("width");
-        var canvasHeight = canvas.getAttribute("height");
         var ctx = canvas.getContext("2d");
         ctx.font = '24px Inter';
         ctx.fillStyle = 'red';
-        ctx.fillText("Você perdeu!", 750, 250);
+        ctx.fillText("Você perdeu!", xOffset + 300, yOffset - 200);
         ctx.stroke();
         letrasEscolhidasIncorretas = letrasValidas;
     }
