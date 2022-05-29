@@ -12,7 +12,7 @@ const letrasValidas = ['A', 'B', 'C', 'Ç', 'D', 'E', 'F', 'G', 'H', 'I', 'J', '
 var canvas = document.getElementById("myCanvas");
 var canvasWidth = canvas.getAttribute("width");
 var canvasHeight = canvas.getAttribute("height");
-var xOffset = canvasWidth / 2 - 294 / 2; 
+var xOffset = canvasWidth / 2 - 294 / 2;
 var yOffset = 500;
 
 function inicializaVariaveis() {
@@ -37,8 +37,8 @@ function criarTabuleiro() {
 
         palavraSorteada.forEach((palavraSorteada, index, array) => {
             ctx.lineWidth = 5;
-            ctx.moveTo(canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras / 2, 560 + 50);
-            ctx.lineTo(canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras, 560 + 50);
+            ctx.moveTo(canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras / 2, yOffset + 110);
+            ctx.lineTo(canvasWidth / 2 - array.length * espacamentoLetras / 2 + espacamentoLetras * index + espacamentoLetras, yOffset + 110);
             ctx.strokeStyle = '#0A3871';
             ctx.stroke();
         });
@@ -184,6 +184,20 @@ function escreverLetraAcertada(acertos) {
     });
 }
 
+function escreverLetraFaltante(acertos) {
+    var letrasAcertadas = acertos;
+
+    var espacamentoLetras = 100;
+    var ctx = canvas.getContext("2d");
+    ctx.font = '48px Inter';
+    ctx.fillStyle = 'red';
+
+    letrasAcertadas.forEach((letrasAcertadas) => {
+        ctx.fillText(palavraSorteada[letrasAcertadas], canvasWidth / 2 - palavraSorteada.length * espacamentoLetras / 2 + espacamentoLetras * letrasAcertadas + espacamentoLetras / 2, yOffset + 100);
+        ctx.stroke();
+    });
+}
+
 function verificarLetraPrecionada(letraEscolhida) {
     var letra = letraEscolhida;
     var indices = [];
@@ -213,6 +227,19 @@ function verificarFimDeJogo() {
         ctx.fillStyle = 'red';
         ctx.fillText("Você perdeu!", xOffset + 300, yOffset - 200);
         ctx.stroke();
+
+        var diferenca = pegarDiferenca();
+        diferenca.forEach((diferenca) => {
+            var acertos = verificarLetraPrecionada(diferenca);
+            escreverLetraFaltante(acertos);
+        });
         letrasEscolhidasIncorretas = letrasValidas;
     }
+}
+
+function pegarDiferenca() {
+    let r1 = palavraSorteada;
+    let r2 = letrasEscolhidasCorretas;
+    let r3 = r1.filter(a => !r2.includes(a));
+    return (r3);
 }
