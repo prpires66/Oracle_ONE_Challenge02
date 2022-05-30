@@ -2,10 +2,11 @@
 //Oracle ONE Challenge 02 - Jogo da Forca
 //
 var palavraSorteada;
-var letrasEscolhidasIncorretas;
-var letrasEscolhidasCorretas;
-var letrasEscolhidasCorretasTotal;
-var palavras = ["BORBOLETA"];
+var letrasEscolhidasIncorretas = [];
+var letrasEscolhidasCorretas = [];
+var letrasEscolhidasCorretasTotal = 0;
+var palavraSorteada = "";
+var novaPalavra = "";
 var palavras = ["GATO", "CACHORRO", "RATO", "PORCO", "RATO", "VACA", "CAVALO", "OVELHA", "GALINA", "PATO", "GANSO", "PAPAGAIO", "ESQUILO", "TARTARUGA", "ZEBRA", "FORMIGA", "BESOURO", "BORBOLETA", "CARANGUEJO", "CROCODILO", "GOLFINHO", "ELEFANTE", "SAPO", "GIRAFA", "LOBO", "CANGURU", "LEOPARDO", "MACACO", "POLVO", "PANDA", "PINGUIM", "COELHO", "SALAMANDRA", "TIGRE", "LOBO", "ZEBRA"];
 const letrasValidas = ['A', 'B', 'C', 'Ç', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
@@ -16,7 +17,8 @@ var xOffset = canvasWidth / 2 - 294 / 2;
 var yOffset = 500;
 
 function inicializaVariaveis() {
-    var palavraSorteada = ""
+    palavraSorteada = "";
+    novaPalavra = "";
     letrasEscolhidasIncorretas = [];
     letrasEscolhidasCorretas = [];
     letrasEscolhidasCorretasTotal = 0;
@@ -121,7 +123,8 @@ botaoNovoJogo.addEventListener("click", function () {
 var botaoAdicionar = document.querySelector('.btn-adicionar');
 botaoAdicionar.addEventListener("click", function () {
     document.querySelector('.menu-inicial').classList.add('oculto');
-    document.querySelector('.tabuleiro').classList.remove('oculto');
+    document.querySelector('.adicionar').classList.remove('oculto');
+    document.querySelector('.inText').focus();
 });
 
 var botaoDesistir = document.querySelector('.btn-desistir');
@@ -132,12 +135,25 @@ botaoDesistir.addEventListener("click", function () {
     criarTabuleiro();
 });
 
+var botaoCancelar = document.querySelector('.btn-cancelar');
+botaoCancelar.addEventListener("click", function () {
+    document.querySelector('.menu-inicial').classList.remove('oculto');
+    document.querySelector('.adicionar').classList.add('oculto');
+    document.querySelector('.inText').value = "";
+    criarTabuleiro();
+});
+
 document.body.addEventListener('keypress', function (event) {
     const key = event.key;
 
     const letraUnicaIncorreta = letrasEscolhidasIncorretas.includes(key.toUpperCase());
     const letraUnicaCorreta = letrasEscolhidasCorretas.includes(key.toUpperCase());
     const validaLetra = letrasValidas.includes(key.toUpperCase());
+
+    if (validaLetra) {
+        novaPalavra += key.toUpperCase();
+    }
+
     if (!letraUnicaIncorreta && !letraUnicaCorreta && validaLetra) {
         var acertos = verificarLetraPrecionada(key.toUpperCase());
         if (acertos.length === 0) {
@@ -238,8 +254,33 @@ function verificarFimDeJogo() {
 }
 
 function pegarDiferenca() {
-    let r1 = palavraSorteada;
-    let r2 = letrasEscolhidasCorretas;
-    let r3 = r1.filter(a => !r2.includes(a));
+    let r1 = letrasEscolhidasCorretas;
+    let r2 = palavraSorteada;
+    let r3 = r2.filter( a => !r1.includes( a ) );
     return (r3);
 }
+
+var inputTexto = document.querySelector('.inText');
+inputTexto.addEventListener('keyup', function (event) {
+    inputTexto.value = novaPalavra.toUpperCase();
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.querySelector('.btn-salvar').click();
+    }
+    if (event.keyCode === 8) {
+        inputTexto.value = inputTexto.value.substring(0, inputTexto.value.length - 1);
+        novaPalavra = inputTexto.value;
+    }
+});
+
+var botaoSalvar = document.querySelector('.btn-salvar');
+botaoSalvar.addEventListener("click", function () {
+    if (inputTexto.value.length > 0) {
+        palavras.push(inputTexto.value);
+        inputTexto.value = "";
+    }
+    document.querySelector('.adicionar').classList.add('oculto');
+    document.querySelector('.tabuleiro').classList.remove('oculto');
+    document.querySelector('.jogo').classList.remove('oculto');
+    criarTabuleiro();
+});

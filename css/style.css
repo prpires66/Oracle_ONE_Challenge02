@@ -61,12 +61,32 @@ label {
 	color: #495057;
 
 	opacity: 0.8;
+}
+
+
+.adicionar {
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 60vw;
+	font-size: 32px;
+	line-height: 150%;
+
+	text-align: left;
+	padding: 16px 50px;
+	border: none;
+	background: #E5E5E5;
+
+	color: #0A3871;
 
 	flex: none;
 	order: 1;
+	align-self: stretch;
 	flex-grow: 0;
-	margin: 0px 80px;
-	text-align: left;
+	margin: 80px 80px;
+
+	height: 50%;
+	width: 80%;
+	resize: both;
 }
 
 .menu-inicial {
@@ -94,6 +114,21 @@ label {
 	background: #E5E5E5;
 	border-radius: 0px;
 	padding: 0px;
+	margin: 0px;
+}
+
+.adicionar {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	align-content: center;
+	align-items: flex-start;
+	height: 100%;
+	width: 100%;
+	background: #E5E5E5;
+	border-radius: 0px;
+	padding: 0px 0px;
 	margin: 0px;
 }
 
@@ -126,10 +161,6 @@ button {
 	text-align: center;
 }
 
-.botoes-menu {
-
-}
-
 .botoes-jogo {
 	display: flex;
 	flex-direction: row;
@@ -142,13 +173,17 @@ button:active {
 	border: 0;
 }
 
-.btn-comecar, .btn-novo-jogo {
+.btn-comecar,
+.btn-novo-jogo,
+.btn-salvar {
 	background: #0A3871;
 	border: 1px solid #D8DFE8;
 	color: white;
 }
 
-.bnt-adicionar, .btn-desistir {
+.btn-adicionar,
+.btn-desistir,
+.btn-cancelar {
 	background: #D8DFE8;
 	border: 1px solid #0A3871;
 }
@@ -168,4 +203,29 @@ footer {
 
 .oculto {
 	display: none;
+}
+
+.inText {
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 60vw;
+	font-size: 32px;
+	line-height: 150%;
+
+	text-align: left;
+	padding: 100px 0px;
+	border: none;
+	background: #E5E5E5;
+
+	color: #0A3871;
+}
+
+input:focus {
+	outline: none;
+}
+
+.label {
+	padding: 0;
+	margin: 0 30px;
+	height: 30px;
 }

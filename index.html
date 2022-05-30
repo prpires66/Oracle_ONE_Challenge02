@@ -25,7 +25,7 @@
                 <button class="btn-adicionar">Adicionar nova palavra</button>
             </div>
         </section>
-        <section class="jogo oculto">
+        <section id="x" class="jogo oculto">
             <div class="tabuleiro">
                 <canvas id="myCanvas" width="1200" height="700"></canvas>
             </div>
@@ -34,7 +34,20 @@
                 <button class="btn-desistir">Desistir</button>
             </div>
         </section>
-
+        <section class="adicionar oculto">
+            <div class="adicionar-palavra">
+                <input type="text" class="inText" value="" name="nova-palavra" placeholder="Digite uma palavra">
+            </div>
+            <div class="inferior">
+                <div class="label">
+                    <label><img class="icone" src="img/icone.png"> Palavras com no máximo 8 letras.</label>
+                </div>
+                <div class="botoes-jogo">
+                    <button class="btn-salvar">Salvar e começar</button>
+                    <button class="btn-cancelar">Cancelar</button>
+                </div>
+            </div>
+        </section>
     </main>
     <footer>
         <p class="autor">
